@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>API Data</title>
+        <style>
+            /* #container {
+                padding: 10px;
+                background: linear-gradient(130deg white, black);
+             } */
+
+             body {
+                background-color: black;
+             }
+
+             .card {
+                width: 50%;
+                max-width: 400px;
+                background: #fff;
+                margin: 50px auto 20px;
+                padding: 40px 30px 70px;
+                border-radius: 10px;
+             }
+
+             .card-body h1 {
+                margin-top: 25px;
+                text-align: center;
+             }
+
+             .card-body p{
+                margin-top: 10px;
+                text-align: center;
+                color: gray;
+             }
+
+             .card-body-img {
+                width: 200px;
+                margin-left: 100px;
+             }
+
+            .card-body-title span {
+                color: var(--primary-color);
+                font-weight: 400;
+            }
+
+            .card-body-text {
+                color: var(--primary-color);
+                font-size: 1.6rem;
+                margin-top: 0;
+                margin-bottom: 2rem;
+            }
+
+            .card-footer {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .card-footer-social {
+                text-align: center;
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .card-footer-social p {
+                letter-spacing: 1px;
+            }
+
+            .card:hover {
+                transform: scale(0.9,0.9);
+                box-shadow: 5px 5px 30px 15px rgba(0, 0, 0, 0.25), 
+                -5px -5px 30px 15px rgba(0, 0, 0, 0.22);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container"></div>
+        <script>
+            const container = document.querySelector('#container');
+            const request = new XMLHttpRequest();
+            request.open('GET', 'https://restcountries.com/v3.1/name/india');
+            request.send();
+            //to get the response
+            request.addEventListener('load', function() {
+                // console.log(this.responseText);
+                const [data] = JSON.parse(this.responseText);
+                // console.log(data.capital);
+                const htmlData = `
+                <div id="card">
+                <article class="card">
+                    <div class="card-body">
+                        <img src="${data.flags.png}" alt="" class="card-body-img" />
+                        <h1 class="card-body-title">
+                            ${data.name.common}<span></span>
+                        </h1>
+                        <p class="card-body-text"> capital: ${data.capital}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-social">
+                            <h3>${data.region}</h3>
+                            <p>Region</p>
+                        </div>
+                        <div class="card-footer-social">
+                            <h3>${data.population}</h3>
+                            <p>Population</p>
+                        </div>
+                        <div class="card-footer-social">
+                            <h3>${data.demonyms.eng.f}</h3>
+                            <p>Demonym</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+                `;
+
+                container.insertAdjacentHTML("afterbegin",htmlData)
+            })
+        </script>
+    </body>
+</html>
